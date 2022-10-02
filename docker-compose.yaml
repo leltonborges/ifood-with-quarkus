@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  db_cadastro:
+    container_name: pg_db_cadastro_ifood
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: study
+      POSTGRES_PASSWORD: study
+      POSTGRES_DB: ifood-cadastro
+    ports:
+      - "5433:5432"
+    networks:
+      - ifood
+networks:
+  ifood:
+      driver: bridge
+      name: network_ifood

@@ -1,0 +1,4 @@
+
+### Get todos os restaurantes
+GET localhost:8090/restaurantes
+Accept: application/json
