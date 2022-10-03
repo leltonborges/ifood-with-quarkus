@@ -39,7 +39,7 @@ public class RestauranteResource {
         if (entityBase.isEmpty()) throw new NotFoundException();
 
         Restaurante restaurante = entityBase.get();
-        restaurante.name = dto.name;
+        restaurante.nome = dto.nome;
 
         restaurante.persist();
     }
