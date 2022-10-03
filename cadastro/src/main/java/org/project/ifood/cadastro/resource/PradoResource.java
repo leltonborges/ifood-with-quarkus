@@ -1,6 +1,5 @@
 package org.project.ifood.cadastro.resource;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 import org.project.ifood.cadastro.model.Prato;
@@ -17,6 +16,12 @@ import java.util.Optional;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PradoResource {
+
+    private static Optional<Restaurante> validaRestaurante(Long idRestaurante) {
+        Optional<Restaurante> opRestaurante = Restaurante.findByIdOptional(idRestaurante);
+        if (opRestaurante.isEmpty()) throw new NotFoundException("Restaurante não encontrado");
+        return opRestaurante;
+    }
 
     @GET
     @Path("/{idRestaurante}/pratos")
@@ -72,11 +77,5 @@ public class PradoResource {
         opPrato.ifPresentOrElse(Prato::delete, () -> {
             throw new NotFoundException();
         });
-    }
-
-    private static Optional<Restaurante> validaRestaurante(Long idRestaurante) {
-        Optional<Restaurante> opRestaurante = Restaurante.findByIdOptional(idRestaurante);
-        if(opRestaurante.isEmpty()) throw new NotFoundException("Restaurante não encontrado");
-        return opRestaurante;
     }
 }
