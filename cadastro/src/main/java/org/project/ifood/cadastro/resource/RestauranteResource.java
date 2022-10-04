@@ -2,7 +2,9 @@ package org.project.ifood.cadastro.resource;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.openapi.annotations.tags.Tags;
-import org.project.ifood.cadastro.dto.AddRestauranteDTO;
+import org.project.ifood.cadastro.dto.restaurante.AddRestauranteDTO;
+import org.project.ifood.cadastro.dto.restaurante.AtualizarRestaurante;
+import org.project.ifood.cadastro.dto.restaurante.RestauranteDTO;
 import org.project.ifood.cadastro.mapper.RestauranteMapper;
 import org.project.ifood.cadastro.model.Restaurante;
 
@@ -13,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/restaurantes")
 @Produces(MediaType.APPLICATION_JSON)
@@ -23,8 +26,10 @@ public class RestauranteResource {
 
     @GET
     @Tags({@Tag(name = "Restaurante")})
-    public List<Restaurante> todosRestuarentes() {
-        return Restaurante.listAll();
+    public List<RestauranteDTO> todosRestuarentes() {
+        return Restaurante.<Restaurante>streamAll()
+                .map(this.restauranteMapper::toRestauranteDTO)
+                .collect(Collectors.toList());
     }
 
     @POST
@@ -40,12 +45,13 @@ public class RestauranteResource {
     @Path("/{id}")
     @Transactional
     @Tags({@Tag(name = "Restaurante")})
-    public Response atualizar(@PathParam("id") Long id, Restaurante dto) {
+    public Response atualizar(@PathParam("id") Long id, AtualizarRestaurante dto) {
         Optional<Restaurante> entityBase = Restaurante.findByIdOptional(id);
         if (entityBase.isEmpty()) throw new NotFoundException();
 
         Restaurante restaurante = entityBase.get();
-        restaurante.nome = dto.nome;
+
+        restauranteMapper.toRestaurante(dto, restaurante);
         restaurante.persist();
 
         return Response.accepted().build();

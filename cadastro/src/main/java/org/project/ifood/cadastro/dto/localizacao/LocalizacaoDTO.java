@@ -1,4 +1,4 @@
-package org.project.ifood.cadastro.dto;
+package org.project.ifood.cadastro.dto.localizacao;
 
 public class LocalizacaoDTO {
     public Double latitude;
