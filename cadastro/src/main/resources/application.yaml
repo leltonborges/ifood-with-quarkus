@@ -1,4 +1,3 @@
-
 quarkus:
   application:
     name: cadastro
@@ -11,26 +10,24 @@ quarkus:
     username: study
     password: study
     jdbc:
-      url: jdbc:postgresql://localhost:5433/ifood-cadastro
+      url: jdbc:tracing:postgresql://localhost:5433/ifood-cadastro
+      tracing: true
+      driver: io.opentracing.contrib.jdbc.TracingDriver
 
   hibernate-orm:
     database:
       generation: update
-#      generation: drop-and-create
+  #      generation: drop-and-create
   http:
     port: ${SERVER_PORT:8090}
+  jaeger:
+    service-name: ifood-cadastro
+    endpoint: http://localhost:14268/api/traces
+    sampler-param: 1
+    sampler-type: const
 
 mp:
   jwt:
     verify:
       issuer: http://localhost:8190/auth/realms/ifood
-      publickey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAozWQpieqLqhwDAG0cNbH8qaJSNkWkW+SfMRshUk8R+hGnrTjj/JOfPkJ/wmIxhrwPKZfPxY61AA49k0KweWsYYm5n65albRHSxgNrvsddXObSo6VgUZvmAugXXCgnKVezElmO5I7kF0GTfE5Apy/Vf3H2c0nry3fxSvtzXNkVh9L+3pEsoVL2GiHd/w11d4UNhmDvRjmyRXdoDm6MtY38EGWDrY0xeuF5HTtbSunVpcZQib/38YodoqHDJzdp0fsxnL/jdgfFkkBR6S5CZ9bmPTBfoBuNcJr6yE1Jdo+wndUh5r4GhA4ROeClFRURG4+eiBpayFuDvgbW1dZZq4a1wIDAQAB"
-
-"%test":
-  jwt:
-    verify:
-      publickey: NONE
-  mp:
-    jwt:
-      verify:
-        issuer: publicKey.pem
+      publickey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk00ooaRwWGp0XtHgH1x+7VhrxrFb1pMV/ka66YiQ2+vtNAR5RPRvLslKwebw8tpTKzNFDMIEtn7JOH6nEvcjwx5AAZ97DcEvIgy/kttrzWiyWXjaTMvtc0msbtmMfBw2XrazAjHbWl3AdYGSMHDHCdOsV5dN1u+W1bJwzF68mv+ykJH+dB3++dTqu8jzYhDJHbj7doLwe52353GJC3ekZKhUruHdmK9+8jrO4xbIykpSaYiIELdYthrBHF6BLQF6kUd5jQO1Rgz/14fzt/2l1aRlxHXac24Psa+zNjLLSu8eYJaXbXF8VpTpahBQ3cjKiWIEmtQV4SDQfOPfidT7+QIDAQAB"

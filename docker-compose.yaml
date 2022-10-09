@@ -7,6 +7,8 @@ services:
       POSTGRES_USER: study
       POSTGRES_PASSWORD: study
       POSTGRES_DB: ifood-cadastro
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     networks:
@@ -17,11 +19,36 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+    volumes:
+      - keycloak_data:/var/lib/keycloak/data
+      - keycloak_data_standalone:/opt/jboss/keycloak/standalone/data
     ports:
       - "8190:8080"
     networks:
       - ifood
+  jaeger_ifood:
+    container_name: jaeger_ifood
+    image: jaegertracing/all-in-one:1.38
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
+    networks:
+      - ifood
+
 networks:
   ifood:
       driver: bridge
       name: network_ifood
+
+volumes:
+  keycloak_data:
+    name: keycloak_data
+  keycloak_data_standalone:
+    name: keycloak_data_standalone
+  postgres_data:
+    name: postgres_data

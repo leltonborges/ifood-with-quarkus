@@ -11,7 +11,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.approvaltests.Approvals;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.project.ifood.cadastro.CadastroTestLifecycleManager;
 import org.project.ifood.cadastro.dto.restaurante.AtualizarRestaurante;
