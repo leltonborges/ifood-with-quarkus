@@ -41,8 +41,6 @@ import java.util.stream.Collectors;
 @SecurityRequirements({
         @SecurityRequirement(name = "ifood-oauth", scopes = {})
 })
-//@SecurityScheme(securitySchemeName = "ifood-oauth", type = SecuritySchemeType.OAUTH2, flows = @OAuthFlows(password = @OAuthFlow(tokenUrl = "http://localhost:8180/auth/realms/ifood/protocol/openid-connect/token")))
-//@SecurityRequirement(name = "ifood-oauth", scopes = {})
 public class RestauranteResource {
     @Inject
     RestauranteMapper restauranteMapper;
@@ -82,7 +80,7 @@ public class RestauranteResource {
         restauranteMapper.toRestaurante(dto, restaurante);
         restaurante.persist();
 
-        return Response.accepted().build();
+        return Response.noContent().build();
     }
 
     @DELETE

@@ -1,1 +1,1 @@
-[{"id":123,"nome":"Novo restauraten","proprietario":"ID do keyclock 123"},{"id":234,"nome":"Novo restauratene","proprietario":"ID do keyclock 234"}]
+[{"id":123,"nomeFantasia":"Novo restauraten","proprietario":"ID do keyclock 123"},{"id":234,"nomeFantasia":"Novo restauratene","proprietario":"ID do keyclock 234"}]
