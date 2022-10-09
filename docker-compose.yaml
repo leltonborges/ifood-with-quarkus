@@ -1,5 +1,6 @@
 version: "3.8"
 services:
+
   db_cadastro:
     container_name: pg_db_cadastro_ifood
     image: postgres:latest
@@ -13,6 +14,7 @@ services:
       - "5433:5432"
     networks:
       - ifood
+
   keycloak_ifood:
     container_name: keycloak_ifood
     image: jboss/keycloak:9.0.3
@@ -26,6 +28,7 @@ services:
       - "8190:8080"
     networks:
       - ifood
+
   jaeger_ifood:
     container_name: jaeger_ifood
     image: jaegertracing/all-in-one:1.38
@@ -40,6 +43,23 @@ services:
     networks:
       - ifood
 
+  promethues_ifood:
+    image: prom/prometheus:v2.39.0
+    container_name: prometheus_ifood
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command: --config.file=/etc/prometheus/prometheus.yml
+    network_mode: "host"
+
+  grafana_ifood:
+    container_name: grafana_ifood
+    image: grafana/grafana:9.1.7
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    network_mode: "host"
+    depends_on:
+      - promethues_ifood
+
 networks:
   ifood:
       driver: bridge
@@ -52,3 +72,5 @@ volumes:
     name: keycloak_data_standalone
   postgres_data:
     name: postgres_data
+  grafana-storage:
+    name: grafana-storage
