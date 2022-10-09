@@ -19,3 +19,9 @@ quarkus:
 #      generation: drop-and-create
   http:
     port: ${SERVER_PORT:8090}
+
+mp:
+  jwt:
+    verify:
+      issuer: http://localhost:8190/auth/realms/ifood
+      publickey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAozWQpieqLqhwDAG0cNbH8qaJSNkWkW+SfMRshUk8R+hGnrTjj/JOfPkJ/wmIxhrwPKZfPxY61AA49k0KweWsYYm5n65albRHSxgNrvsddXObSo6VgUZvmAugXXCgnKVezElmO5I7kF0GTfE5Apy/Vf3H2c0nry3fxSvtzXNkVh9L+3pEsoVL2GiHd/w11d4UNhmDvRjmyRXdoDm6MtY38EGWDrY0xeuF5HTtbSunVpcZQib/38YodoqHDJzdp0fsxnL/jdgfFkkBR6S5CZ9bmPTBfoBuNcJr6yE1Jdo+wndUh5r4GhA4ROeClFRURG4+eiBpayFuDvgbW1dZZq4a1wIDAQAB"
