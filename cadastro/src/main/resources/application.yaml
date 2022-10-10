@@ -17,7 +17,6 @@ quarkus:
   hibernate-orm:
     database:
       generation: update
-  #      generation: drop-and-create
   http:
     port: ${SERVER_PORT:8090}
   jaeger:
@@ -25,6 +24,9 @@ quarkus:
     endpoint: http://localhost:14268/api/traces
     sampler-param: 1
     sampler-type: const
+  flyway:
+    clean-at-start: true
+    migrate-at-start: true
 
 mp:
   jwt:
