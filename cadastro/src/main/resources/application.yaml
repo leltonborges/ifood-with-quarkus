@@ -10,7 +10,7 @@ quarkus:
     username: ${CADASTRO_IFOOD_DB_USER:study}
     password: ${CADASTRO_IFOOD_DB_PASS:study}
     jdbc:
-      url: jdbc:tracing:postgresql://${CADASTRO_IFOOD_HOST:localhost}:5433/${CADASTRO_IFOOD_DB_NAME:ifood-cadastro}
+      url: jdbc:tracing:postgresql://${CADASTRO_IFOOD_HOST:localhost}:${CADASTRO_IFOOD_DB_PORT:5433}/${CADASTRO_IFOOD_DB_NAME:ifood-cadastro}
       tracing: true
       driver: io.opentracing.contrib.jdbc.TracingDriver
 

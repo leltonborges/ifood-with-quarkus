@@ -1,17 +1,31 @@
 version: "3.8"
 services:
 
-  db_cadastro:
-    container_name: pg_db_cadastro_ifood
-    image: postgres:latest
+  db_cadastro_ifood:
+    container_name: db_cadastro_ifood
+    image: postgres:14.1
     environment:
       POSTGRES_USER: study
       POSTGRES_PASSWORD: study
       POSTGRES_DB: ifood-cadastro
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_cadastro:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    networks:
+      - ifood
+
+  db_marketplace_ifood:
+    container_name: db_marketplace_ifood
+    image: postgres:14.1
+    environment:
+      POSTGRES_USER: marketplace
+      POSTGRES_PASSWORD: marketplace
+      POSTGRES_DB: ifood-marketplace
+    volumes:
+      - postgres_data_marketplace:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
     networks:
       - ifood
 
@@ -70,7 +84,9 @@ volumes:
     name: keycloak_data
   keycloak_data_standalone:
     name: keycloak_data_standalone
-  postgres_data:
-    name: postgres_data
+  postgres_data_cadastro:
+    name: postgres_data_cadastro
+  postgres_data_marketplace:
+    name: postgres_data_marketplace
   grafana-storage:
     name: grafana-storage
