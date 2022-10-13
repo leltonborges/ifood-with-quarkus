@@ -1,9 +1,12 @@
 package org.project.ifood.marketplace.model;
 
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
+
 import javax.persistence.*;
 
 @Entity
-public class Restaurante {
+@Table(name = "tb_restaurante")
+public class Restaurante extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

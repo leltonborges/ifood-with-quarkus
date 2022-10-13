@@ -1,4 +1,4 @@
-package providers.response;
+package org.project.ifood.cadastro.providers.response;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 

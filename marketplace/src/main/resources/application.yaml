@@ -1,0 +1,16 @@
+quarkus:
+    application:
+        name: marketplace-ifood
+    datasource:
+        db-kind: postgresql
+        devservices:
+            enabled: false
+        password: marketplace
+        username: marketplace
+        reactive:
+            url: postgresql://${MARKETPLACE_IFOOD_HOST_DB:localhost}:${MARKETPLACE_IFOOD_DB_PORT:5434}/${MARKETPLACE_IFOOD_DB_NAME:ifood-marketplace}
+        jdbc: false
+    devservices:
+        enabled: false
+    http:
+        port: 8091

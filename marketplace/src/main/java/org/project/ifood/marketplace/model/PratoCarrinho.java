@@ -1,12 +1,15 @@
 package org.project.ifood.marketplace.model;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class PratoCarrinho {
+@Table(name = "tb_prato_cliente")
+public class PratoCarrinho extends PanacheEntityBase {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public String usuario;
 

@@ -16,7 +16,7 @@ import org.project.ifood.cadastro.dto.restaurante.AtualizarRestaurante;
 import org.project.ifood.cadastro.dto.restaurante.RestauranteDTO;
 import org.project.ifood.cadastro.mapper.RestauranteMapper;
 import org.project.ifood.cadastro.model.Restaurante;
-import providers.response.ConstraintViolationResponse;
+import org.project.ifood.cadastro.providers.response.ConstraintViolationResponse;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
