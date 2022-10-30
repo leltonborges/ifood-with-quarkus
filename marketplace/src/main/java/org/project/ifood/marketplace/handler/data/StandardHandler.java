@@ -1,12 +1,12 @@
 package org.project.ifood.marketplace.handler.data;
 
-public class Standard {
+public class StandardHandler {
     private String message;
     private String path;
     private Long timestamp;
-    private String status;
+    private int status;
 
-    public Standard(String message, String path, Long timestamp, String status) {
+    public StandardHandler(String message, String path, Long timestamp, int status) {
         this.message = message;
         this.path = path;
         this.timestamp = timestamp;
@@ -37,11 +37,11 @@ public class Standard {
         this.timestamp = timestamp;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }
