@@ -21,10 +21,18 @@ public class FlywayConfig {
     @ConfigProperty(name = "quarkus.datasource.password")
     String datasourcePassword;
 
+    @ConfigProperty(name = "quarkus.flyway.default-schema")
+    String defaultSchema;
+
+    @ConfigProperty(name = "quarkus.flyway.create-schemas")
+    boolean isCreateSchema;
+
     public void runFlywayMigration(@Observes StartupEvent event) {
         Flyway flyway = Flyway.configure()
                               .dataSource("jdbc:" + datasourceUrl, datasourceUsername, datasourcePassword)
                               .cleanDisabled(!isClean)
+                              .defaultSchema(defaultSchema)
+                              .createSchemas(isCreateSchema)
                               .load();
 
         if (isClean) flyway.clean();

@@ -9,11 +9,12 @@ import javax.persistence.*;
 public class Restaurante extends PanacheEntityBase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public String nome;
     @OneToOne(cascade = CascadeType.ALL)
     public Localizacao localizacao;
+    public String cnpj;
+    public String proprietario;
 
     @Override
     public String toString() {

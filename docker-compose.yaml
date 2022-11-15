@@ -76,6 +76,32 @@ services:
     depends_on:
       - promethues_ifood
 
+  activemq_ifood:
+    container_name: activemq
+    image: vromero/activemq-artemis:2.16.0
+    networks:
+      - ifood
+    environment:
+      ARTEMIS_USERNAME: admin
+      ARTEMIS_PASSWORD: admin
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "5672:5672"
+
+  artemis_ifood:
+    container_name: activemq-artemis-broker
+    image: quay.io/artemiscloud/activemq-artemis-broker:1.0.9
+    ports:
+      - "8162:8161"
+      - "61616:61616"
+      - "5672:5672"
+    environment:
+      AMQ_USER: quarkus
+      AMQ_PASSWORD: quarkus
+    networks:
+      - ifood
+
 networks:
   ifood:
       driver: bridge

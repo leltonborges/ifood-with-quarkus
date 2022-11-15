@@ -23,7 +23,7 @@ public interface RestauranteMapper {
 
     @Mappings({
             @Mapping(source = "nome", target = "nomeFantasia"),
-            @Mapping(target = "localizacao", dateFormat = "dd/MM/yyyy HH:mm:ss")
+            @Mapping(target = "dataCriacao", dateFormat = "dd/MM/yyyy HH:mm:ss")
     })
     RestauranteDTO toRestauranteDTO(Restaurante restaurante);
 

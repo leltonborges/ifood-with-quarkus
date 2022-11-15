@@ -12,9 +12,3 @@ quarkus:
   flyway:
     clean-at-start: false
     migrate-at-start: false
-
-mp:
-  jwt:
-    verify:
-      issuer: http://localhost:8190/auth/realms/ifood
-      publickey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk00ooaRwWGp0XtHgH1x+7VhrxrFb1pMV/ka66YiQ2+vtNAR5RPRvLslKwebw8tpTKzNFDMIEtn7JOH6nEvcjwx5AAZ97DcEvIgy/kttrzWiyWXjaTMvtc0msbtmMfBw2XrazAjHbWl3AdYGSMHDHCdOsV5dN1u+W1bJwzF68mv+ykJH+dB3++dTqu8jzYhDJHbj7doLwe52353GJC3ekZKhUruHdmK9+8jrO4xbIykpSaYiIELdYthrBHF6BLQF6kUd5jQO1Rgz/14fzt/2l1aRlxHXac24Psa+zNjLLSu8eYJaXbXF8VpTpahBQ3cjKiWIEmtQV4SDQfOPfidT7+QIDAQAB"

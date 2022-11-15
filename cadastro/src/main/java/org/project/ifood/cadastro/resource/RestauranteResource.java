@@ -11,6 +11,8 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.security.*;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.openapi.annotations.tags.Tags;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.project.ifood.cadastro.dto.restaurante.AddRestauranteDTO;
 import org.project.ifood.cadastro.dto.restaurante.AtualizarRestaurante;
 import org.project.ifood.cadastro.dto.restaurante.RestauranteDTO;
@@ -48,6 +50,10 @@ public class RestauranteResource {
     @Inject
     RestauranteMapper restauranteMapper;
 
+    @Inject
+    @Channel("restaurantes")
+    Emitter<Restaurante> restauranteEmitter;
+
     @Counted(name = "Quantidade buscas todos restaurante")
     @SimplyTimed(name = "Tempo simples de busca")
     @Timed(name = "Tempo completo de busca")
@@ -70,6 +76,7 @@ public class RestauranteResource {
     public Response incluir(@Valid AddRestauranteDTO dto) {
         Restaurante restaurante = restauranteMapper.toRestaureante(dto);
         restaurante.persist();
+        restauranteEmitter.send(restaurante);
         return Response.status(Response.Status.CREATED).build();
     }
 
