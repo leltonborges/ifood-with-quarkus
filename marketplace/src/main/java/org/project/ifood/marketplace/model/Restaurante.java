@@ -14,7 +14,6 @@ public class Restaurante extends PanacheEntityBase {
     @OneToOne(cascade = CascadeType.ALL)
     public Localizacao localizacao;
     public String cnpj;
-    public String proprietario;
 
     @Override
     public String toString() {

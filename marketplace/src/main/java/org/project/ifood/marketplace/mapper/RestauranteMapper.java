@@ -13,7 +13,6 @@ public interface RestauranteMapper {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "nomeFantasia", target = "nome"),
             @Mapping(source = "cnpj", target = "cnpj"),
-            @Mapping(source = "proprietario", target = "proprietario"),
             @Mapping(source = "localizacao.longitude", target = "localizacao.longitude"),
             @Mapping(source = "localizacao.latitude", target = "localizacao.latitude")
     })
