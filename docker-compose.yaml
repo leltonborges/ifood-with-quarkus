@@ -99,8 +99,20 @@ services:
     environment:
       AMQ_USER: quarkus
       AMQ_PASSWORD: quarkus
+    volumes:
+      - activemq-storage:/var/lib/artemis
     networks:
       - ifood
+  mongodb_ifood:
+    image: mongo:6.0.3
+    volumes:
+      - mongodb-storage:/etc/mongo
+    ports:
+      - "27027:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: pedido
+      MONGO_INITDB_ROOT_PASSWORD: pedido
+      MONGO_INITDB_DATABASE: pedido_ifood
 
 networks:
   ifood:
@@ -120,3 +132,7 @@ volumes:
     name: grafana-storage
   jaeger-storage:
     name: jaeger-storage
+  activemq-storage:
+    name: activemq-storage
+  mongodb-storage:
+    name: mongodb-storage
