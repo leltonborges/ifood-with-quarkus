@@ -33,13 +33,13 @@ amqp-port: 5672
 amqp-username: admin
 amqp-password: admin
 
-amp:
+mp:
   messaging:
     outgoing:
       restaurantes:
         connector: smallrye-amqp
         address: restaurantes
-mp:
+#mp:
   jwt:
     verify:
       issuer: http://localhost:8190/auth/realms/ifood

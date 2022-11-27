@@ -26,11 +26,16 @@ amqp-host: localhost
 amqp-port: 5672
 amqp-username: admin
 amqp-password: admin
-amp:
+mp:
     messaging:
         incoming:
             restaurantes:
                 connector: smallrye-amqp
                 address: restaurantes
+        outgoing:
+            pedidosKfk:
+                connector: smallrye-kafka
+                value:
+                    serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
         get:
             address: IncludeRestaurante

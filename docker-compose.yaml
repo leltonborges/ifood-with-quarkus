@@ -89,21 +89,23 @@ services:
       - "61616:61616"
       - "5672:5672"
 
-  artemis_ifood:
-    container_name: activemq-artemis-broker
-    image: quay.io/artemiscloud/activemq-artemis-broker:1.0.9
-    ports:
-      - "8162:8161"
-      - "61616:61616"
-      - "5672:5672"
-    environment:
-      AMQ_USER: quarkus
-      AMQ_PASSWORD: quarkus
-    volumes:
-      - activemq-storage:/var/lib/artemis
-    networks:
-      - ifood
+#  artemis_ifood:
+#    container_name: activemq-artemis-broker
+#    image: quay.io/artemiscloud/activemq-artemis-broker:1.0.9
+#    ports:
+#      - "8162:8161"
+#      - "61616:61616"
+#      - "5672:5672"
+#    environment:
+#      AMQ_USER: quarkus
+#      AMQ_PASSWORD: quarkus
+#    volumes:
+#      - activemq-storage:/var/lib/artemis
+#    networks:
+#      - ifood
+
   mongodb_ifood:
+    container_name: mongodb
     image: mongo:6.0.3
     volumes:
       - mongodb-storage:/etc/mongo
@@ -114,10 +116,38 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pedido
       MONGO_INITDB_DATABASE: pedido_ifood
 
+  zookeeper_ifood:
+    container_name: zookeeper
+    image: debezium/zookeeper:1.9.6.Final
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+
+  kafka_ifood:
+    container_name: kafka
+    image: debezium/kafka:1.9.6.Final
+    ports:
+      - "9092:9092"
+    links:
+      - zookeeper_ifood
+    environment:
+      ZOOKEEPER_CONNECT: zookeeper_ifood:2181
+
+  kafdrop:
+    container_name: kafdrop
+    image: obsidiandynamics/kafdrop:3.28.0
+    environment:
+      KAFKA_BROKERCONNECT: kafka_ifood:9092
+    ports:
+      - "9000:9000"
+    depends_on:
+      - kafka_ifood
+
 networks:
   ifood:
-      driver: bridge
-      name: network_ifood
+    driver: bridge
+    name: network_ifood
 
 volumes:
   keycloak_data:

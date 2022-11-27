@@ -1,0 +1,7 @@
+quarkus:
+  mongodb:
+    credentials:
+      username: pedido
+      password: pedido
+    hosts: 127.0.0.1:27027
+    database: pedido
