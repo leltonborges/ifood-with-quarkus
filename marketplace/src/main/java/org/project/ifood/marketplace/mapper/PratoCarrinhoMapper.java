@@ -21,5 +21,5 @@ public interface PratoCarrinhoMapper {
             @Mapping(source = "preco", target = "preco"),
             @Mapping(source = "restaurante.nome", target = "restaurante.nomeFantasia")
     })
-    PratoPedidoDTO fromPratoPedidoDTO(Prato pratoDTO);
+    PratoPedidoDTO fromPratoPedidoDTO(Prato prato);
 }
