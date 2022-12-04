@@ -13,7 +13,7 @@ quarkus:
     devservices:
         enabled: false
     http:
-        port: 8091
+        port: ${SERVER_PORT:8091}
     flyway:
         migrate-at-start: true
         clean-at-start: true
@@ -37,5 +37,3 @@ mp:
                 connector: smallrye-kafka
                 value:
                     serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
-        get:
-            address: IncludeRestaurante

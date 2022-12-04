@@ -5,3 +5,20 @@ quarkus:
       password: pedido
     hosts: 127.0.0.1:27027
     database: pedido
+  http:
+    port: ${SERVER_PORT:8092}
+  devservices:
+    enabled: false
+
+amqp-host: localhost
+amqp-port: 5672
+amqp-username: admin
+amqp-password: admin
+mp:
+  messaging:
+    incoming:
+      pedidosKfk:
+        connector: smallrye-kafka
+        value:
+          deserializer: org.project.ifood.pedido.kafka.deserializer.PedidoDeserializer
+        group.id: ${GROUP_ID_KFK_PEDIDO:ifood-pedido-kfk}
