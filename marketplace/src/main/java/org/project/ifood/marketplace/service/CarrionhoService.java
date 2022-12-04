@@ -4,19 +4,15 @@ import io.quarkus.hibernate.reactive.panache.Panache;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.project.ifood.marketplace.dto.pedido.PedidoRealizadoDTO;
-import org.project.ifood.marketplace.model.Prato;
 import org.project.ifood.marketplace.model.PratoCarrinho;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.NotFoundException;
 import java.time.LocalDateTime;
 
 @ApplicationScoped
 public class CarrionhoService {
-    @Inject
-    PratoService pratoService;
 
     public Uni<PratoCarrinho> save(PratoCarrinho pratoCarrinho) {
         return Panache.<PratoCarrinho>withTransaction(pratoCarrinho::persist)

@@ -114,7 +114,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: pedido
       MONGO_INITDB_ROOT_PASSWORD: pedido
-      MONGO_INITDB_DATABASE: pedido_ifood
+      MONGO_INITDB_DATABASE: pedidos
 
   zookeeper_ifood:
     container_name: zookeeper

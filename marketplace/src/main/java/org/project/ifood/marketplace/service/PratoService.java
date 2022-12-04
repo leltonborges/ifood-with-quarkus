@@ -7,8 +7,8 @@ import org.project.ifood.marketplace.model.Restaurante;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.NotFoundException;
-
 @ApplicationScoped
+
 public class PratoService {
 
     public Multi<Prato> getPratoAll() {

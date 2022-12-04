@@ -1,6 +1,5 @@
 package org.project.ifood.marketplace.message;
 
-import io.quarkus.hibernate.reactive.panache.Panache;
 import io.vertx.core.json.JsonObject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.project.ifood.marketplace.dto.restaurante.AddRestauranteDTO;
@@ -15,7 +14,6 @@ import javax.transaction.Transactional;
 @ApplicationScoped
 public class RestauranteIncoming {
     RestauranteService restauranteService;
-
     RestauranteMapper restauranteMapper;
 
     @Inject

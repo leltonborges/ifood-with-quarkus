@@ -1,7 +1,5 @@
 package org.project.ifood.marketplace.resources;
 
-import io.quarkus.hibernate.reactive.panache.Panache;
-import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.project.ifood.marketplace.dto.prato.PratoDTO;
@@ -17,7 +15,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.URI;
 
 @Path("/restaurantes")
 @Consumes(MediaType.APPLICATION_JSON)

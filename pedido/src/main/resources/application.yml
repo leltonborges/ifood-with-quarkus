@@ -4,7 +4,8 @@ quarkus:
       username: pedido
       password: pedido
     hosts: 127.0.0.1:27027
-    database: pedido
+    database: admin
+#    database: pedido
   http:
     port: ${SERVER_PORT:8092}
   devservices:
@@ -21,4 +22,8 @@ mp:
         connector: smallrye-kafka
         value:
           deserializer: org.project.ifood.pedido.kafka.deserializer.PedidoDeserializer
-        group.id: ${GROUP_ID_KFK_PEDIDO:ifood-pedido-kfk}
+        group:
+          id: ${GROUP_ID_KFK_PEDIDO:ifood-pedido-kfk}
+        auto:
+          offset:
+
