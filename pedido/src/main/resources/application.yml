@@ -5,11 +5,13 @@ quarkus:
       password: pedido
     hosts: 127.0.0.1:27027
     database: admin
-#    database: pedido
   http:
     port: ${SERVER_PORT:8092}
   devservices:
     enabled: false
+  elasticsearch:
+    hosts: localhost:9200
+    protocol: http
 
 amqp-host: localhost
 amqp-port: 5672

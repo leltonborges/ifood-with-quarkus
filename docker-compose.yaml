@@ -77,7 +77,7 @@ services:
       - promethues_ifood
 
   activemq_ifood:
-    container_name: activemq
+    container_name: activemq_ifood
     image: vromero/activemq-artemis:2.16.0
     networks:
       - ifood
@@ -89,23 +89,23 @@ services:
       - "61616:61616"
       - "5672:5672"
 
-#  artemis_ifood:
-#    container_name: activemq-artemis-broker
-#    image: quay.io/artemiscloud/activemq-artemis-broker:1.0.9
-#    ports:
-#      - "8162:8161"
-#      - "61616:61616"
-#      - "5672:5672"
-#    environment:
-#      AMQ_USER: quarkus
-#      AMQ_PASSWORD: quarkus
-#    volumes:
-#      - activemq-storage:/var/lib/artemis
-#    networks:
-#      - ifood
+  #  artemis_ifood:
+  #    container_name: activemq-artemis-broker
+  #    image: quay.io/artemiscloud/activemq-artemis-broker:1.0.9
+  #    ports:
+  #      - "8162:8161"
+  #      - "61616:61616"
+  #      - "5672:5672"
+  #    environment:
+  #      AMQ_USER: quarkus
+  #      AMQ_PASSWORD: quarkus
+  #    volumes:
+  #      - activemq-storage:/var/lib/artemis
+  #    networks:
+  #      - ifood
 
   mongodb_ifood:
-    container_name: mongodb
+    container_name: mongodb_ifood
     image: mongo:6.0.3
     volumes:
       - mongodb-storage:/etc/mongo
@@ -117,7 +117,7 @@ services:
       MONGO_INITDB_DATABASE: pedidos
 
   zookeeper_ifood:
-    container_name: zookeeper
+    container_name: zookeeper_ifood
     image: debezium/zookeeper:1.9.6.Final
     ports:
       - "2181:2181"
@@ -134,8 +134,8 @@ services:
     environment:
       ZOOKEEPER_CONNECT: zookeeper_ifood:2181
 
-  kafdrop:
-    container_name: kafdrop
+  kafdrop_ifood:
+    container_name: kafdrop_ifood
     image: obsidiandynamics/kafdrop:3.28.0
     environment:
       KAFKA_BROKERCONNECT: kafka_ifood:9092
@@ -143,6 +143,46 @@ services:
       - "9000:9000"
     depends_on:
       - kafka_ifood
+
+  elastic_ifood:
+    container_name: elastic_ifood
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    deploy:
+      resources:
+        limits:
+          memory: 800M
+          cpus: 0.50
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch-storage:/usr/share/elasticsearch/data
+    networks:
+      - ifood
+
+  kibana_ifood:
+    container_name: kibana_ifood
+    image: docker.elastic.co/kibana/kibana:7.6.2
+    environment:
+      SERVER_NAME: kibana.ifood.org
+      ELASTICSEARCH_HOSTS: '["http://elastic_ifood:9200"]'
+    networks:
+      - ifood
+    ports:
+      - "5601:5601"
+    depends_on:
+     elastic_ifood:
+       condition: service_started
 
 networks:
   ifood:
@@ -166,3 +206,5 @@ volumes:
     name: activemq-storage
   mongodb-storage:
     name: mongodb-storage
+  elasticsearch-storage:
+    name: elasticsearch-storage
