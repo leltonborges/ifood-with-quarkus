@@ -9,7 +9,7 @@ import java.util.List;
 public class Pedido extends ReactivePanacheMongoEntity {
 
     public String client;
-    public List<Prato> pratoList;
+    public List<Prato> pratos;
     public String entregador;
     public Localizacao localizacaoEntregador;
 }

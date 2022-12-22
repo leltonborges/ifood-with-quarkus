@@ -9,7 +9,6 @@ import org.project.ifood.pedido.model.Restaurante;
 @Mapper(componentModel = "cdi")
 public interface RestauranteMapper {
     @Mappings({
-            @Mapping(target = "id", ignore = true),
             @Mapping(source = "id", target = "idRestaurante"),
             @Mapping(source = "cnpj", target = "cnpj"),
             @Mapping(source = "nomeFantasia", target = "nome")

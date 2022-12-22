@@ -1,4 +1,4 @@
-package org.project.ifood.pedido.dto.pedido;
+package org.project.ifood.pedido.dto.prato;
 
 import org.project.ifood.pedido.dto.restaurante.RestauranteDTO;
 
