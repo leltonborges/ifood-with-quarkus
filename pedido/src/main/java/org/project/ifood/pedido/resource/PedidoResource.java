@@ -16,8 +16,13 @@ import javax.ws.rs.core.MediaType;
 @Produces({ MediaType.APPLICATION_JSON })
 @Consumes({ MediaType.APPLICATION_JSON })
 public class PedidoResource {
-    @Inject
+
     PedidoMapper pedidoMapper;
+
+    @Inject
+    public PedidoResource(PedidoMapper pedidoMapper) {
+        this.pedidoMapper = pedidoMapper;
+    }
 
     @GET
     public Multi<PedidoDTO> findAllPedidos() {
