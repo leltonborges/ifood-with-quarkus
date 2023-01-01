@@ -1,4 +1,3 @@
-
 quarkus:
   application:
     name: IFOOD_PEDIDO
@@ -24,9 +23,23 @@ quarkus:
         port: 12201
         filter-stack-trace: true
         skip-hostname-resolution: false
+        origin-host: PEDIDO_IFOOD
+        facility: jboss-logmanager
+
   vertx:
     cluster:
       host: PEDIDO
+  smallrye-health:
+    ui:
+      enable: true
+
+  kafka:
+    health:
+      enabled: true
+kafka:
+  bootstrap:
+    servers: ${SERVER_KAKFA_SERVERS:localhost:9092}
+
 amqp-host: localhost
 amqp-port: 5672
 amqp-username: admin
@@ -39,6 +52,10 @@ mp:
         value:
           deserializer: org.project.ifood.pedido.kafka.deserializer.PedidoDeserializer
         group:
-          id: ${GROUP_ID_KFK_PEDIDO:ifood-pedido-kfk}
+          id: ${quarkus.application.name}
         auto:
           offset:
+            reset: earliest
+        health-enabled: true
+        bootstrap:
+          servers: ${PEDIDO_BOOTSTRAP_SERVERS:localhost:9092}
