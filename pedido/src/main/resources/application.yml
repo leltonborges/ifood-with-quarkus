@@ -1,4 +1,7 @@
+
 quarkus:
+  application:
+    name: IFOOD_PEDIDO
   mongodb:
     credentials:
       username: pedido
@@ -12,7 +15,18 @@ quarkus:
   elasticsearch:
     hosts: localhost:9200
     protocol: http
-
+  log:
+    handler:
+      gelf:
+        enabled: true
+        level: ALL
+        host: localhost
+        port: 12201
+        filter-stack-trace: true
+        skip-hostname-resolution: false
+  vertx:
+    cluster:
+      host: PEDIDO
 amqp-host: localhost
 amqp-port: 5672
 amqp-username: admin
@@ -28,4 +42,3 @@ mp:
           id: ${GROUP_ID_KFK_PEDIDO:ifood-pedido-kfk}
         auto:
           offset:
-
