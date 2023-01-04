@@ -1,0 +1,18 @@
+{
+    "name": "db-cadastro-ifood",
+    "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "tasks.max": "1",
+        "database.hostname": "db_cadastro_ifood",
+        "database.port": "5432",
+        "database.user": "study",
+        "database.password": "study",
+        "database.dbname" : "ifood-cadastro",
+        "database.server.id": "184054",
+        "database.server.name": "ifoodcadastro",
+        "database.server.name": "banco-cadastro-ifood-1",
+        "database.history.kafka.bootstrap.servers": "kafkabroker:9092",
+        "database.history.kafka.topic": "schema-changes.inventory"
+    }
+}
+
