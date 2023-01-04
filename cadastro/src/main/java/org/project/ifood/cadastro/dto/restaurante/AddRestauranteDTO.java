@@ -17,8 +17,6 @@ public class AddRestauranteDTO implements DTO {
     @NotBlank
     @Pattern(regexp = "(^\\d{2}\\x2E\\d{3}\\x2E\\d{3}\\x2F\\d{4}\\x2D\\d{2}$)")
     public String cnpj;
-    @NotBlank
-    public String proprietario;
     public LocalizacaoDTO localizacao;
 
     @Override

@@ -1,5 +1,8 @@
 package org.project.ifood.cadastro.resource;
 
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -19,8 +22,10 @@ import org.project.ifood.cadastro.dto.restaurante.RestauranteDTO;
 import org.project.ifood.cadastro.mapper.RestauranteMapper;
 import org.project.ifood.cadastro.model.Restaurante;
 import org.project.ifood.cadastro.providers.response.ConstraintViolationResponse;
+import org.project.ifood.cadastro.service.RestauranteService;
 
 import javax.annotation.security.RolesAllowed;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -28,9 +33,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequestScoped
 @Path("/restaurantes")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -51,23 +56,29 @@ public class RestauranteResource {
     RestauranteMapper restauranteMapper;
 
     @Inject
+    @Claim(standard = Claims.given_name)
+    String jwtSubProprietario;
+
+    @Inject
     @Channel("restaurantes")
     Emitter<Restaurante> restauranteEmitter;
+    @Inject
+    RestauranteService restauranteService;
 
     @Counted(name = "Quantidade buscas todos restaurante")
     @SimplyTimed(name = "Tempo simples de busca")
     @Timed(name = "Tempo completo de busca")
     @GET
-    @Tags({@Tag(name = "Restaurante")})
+    @Tags({ @Tag(name = "Restaurante") })
     public List<RestauranteDTO> todosRestuarentes() {
         return Restaurante.<Restaurante>streamAll()
-                .map(this.restauranteMapper::toRestauranteDTO)
-                .collect(Collectors.toList());
+                          .map(this.restauranteMapper::toRestauranteDTO)
+                          .collect(Collectors.toList());
     }
 
     @POST
     @Transactional
-    @Tags({@Tag(name = "Restaurante")})
+    @Tags({ @Tag(name = "Restaurante") })
     @APIResponses({
             @APIResponse(responseCode = "201", description = "Caso restaurante seja cadastrado com sucesso"),
             @APIResponse(responseCode = "400", description = "Erro do lado cliente", content = @Content(schema = @Schema(allOf = ConstraintViolationResponse.class)))
@@ -75,6 +86,7 @@ public class RestauranteResource {
     })
     public Response incluir(@Valid AddRestauranteDTO dto) {
         Restaurante restaurante = restauranteMapper.toRestaureante(dto);
+        restaurante.proprietario = jwtSubProprietario;
         restaurante.persist();
         restauranteEmitter.send(restaurante);
         return Response.status(Response.Status.CREATED).build();
@@ -83,12 +95,9 @@ public class RestauranteResource {
     @PUT
     @Path("/{id}")
     @Transactional
-    @Tags({@Tag(name = "Restaurante")})
+    @Tags({ @Tag(name = "Restaurante") })
     public Response atualizar(@PathParam("id") Long id, AtualizarRestaurante dto) {
-        Optional<Restaurante> entityBase = Restaurante.findByIdOptional(id);
-        if (entityBase.isEmpty()) throw new NotFoundException();
-
-        Restaurante restaurante = entityBase.get();
+        Restaurante restaurante = restauranteService.findByRestaurante(id, jwtSubProprietario);
 
         restauranteMapper.toRestaurante(dto, restaurante);
         restaurante.persist();
@@ -99,12 +108,10 @@ public class RestauranteResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    @Tags({@Tag(name = "Restaurante")})
+    @Tags({ @Tag(name = "Restaurante") })
     public Response deletar(@PathParam("id") Long id) {
-        Optional<Restaurante> entityBase = Restaurante.findByIdOptional(id);
-        entityBase.ifPresentOrElse(Restaurante::delete, () -> {
-            throw new NotFoundException();
-        });
+        Restaurante restaurante = restauranteService.findByRestaurante(id, jwtSubProprietario);
+        restaurante.delete();
         return Response.noContent().build();
     }
 }

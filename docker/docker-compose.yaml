@@ -3,7 +3,7 @@ services:
 
   db_cadastro_ifood:
     container_name: db_cadastro_ifood
-    image: postgres:14.1
+    image: debezium/example-postgres:1.9.6.Final 
     environment:
       POSTGRES_USER: study
       POSTGRES_PASSWORD: study
@@ -12,6 +12,27 @@ services:
       - postgres_data_cadastro:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    networks:
+      - ifood
+
+  connect_debezium:
+    image: debezium/connect:1.9.6.Final 
+    environment:
+      - BOOTSTRAP_SERVERS=kafkabroker:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+    ports:
+      - "8083:8083"
+    links:
+      - kafkabroker
+      - db_cadastro_ifood
+      - zookeeper_ifood
+    depends_on:
+      - kafkabroker
+      - zookeeper_ifood
+      - db_cadastro_ifood
     networks:
       - ifood
 
@@ -107,7 +128,7 @@ services:
 
   zookeeper_ifood:
     container_name: zookeeper_ifood
-    image: debezium/zookeeper:2.1
+    image: debezium/zookeeper:1.9.6.Final 
     environment:
       ZOOKEEPER_4LW_COMMANDS_WHITELIST: "*"
       4LW_COMMANDS_WHITELIST: "*"
@@ -121,10 +142,12 @@ services:
       timeout: 10s
       start_period: 10s
       retries: 10
+    networks:
+      - ifood
 
-  kafka_ifood:
+  kafkabroker:
     container_name: kafka
-    image: debezium/kafka:2.1
+    image: debezium/kafka:1.9.6.Final 
     ports:
       - "9092:9092"
     links:
@@ -134,16 +157,20 @@ services:
     depends_on:
       zookeeper_ifood:
         condition: service_healthy
+    networks:
+      - ifood
 
   kafdrop_ifood:
     container_name: kafdrop_ifood
     image: obsidiandynamics/kafdrop:3.28.0
     environment:
-      KAFKA_BROKERCONNECT: kafka_ifood:9092
+      KAFKA_BROKERCONNECT: kafkabroker:9092
     ports:
       - "9000:9000"
     depends_on:
-      - kafka_ifood
+      - kafkabroker
+    networks:
+      - ifood
 
   elasticsearch:
     image: docker.io/elastic/elasticsearch:7.16.3
