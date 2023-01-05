@@ -23,6 +23,8 @@ services:
       - CONFIG_STORAGE_TOPIC=my_connect_configs
       - OFFSET_STORAGE_TOPIC=my_connect_offsets
       - STATUS_STORAGE_TOPIC=my_connect_statuses
+    volumes:
+      - connect-storage:/kafka
     ports:
       - "8083:8083"
     links:
@@ -243,3 +245,5 @@ volumes:
     name: mongodb-storage
   elasticsearch-storage:
     name: elasticsearch-storage
+  connect-storage:
+    name: connect-storage

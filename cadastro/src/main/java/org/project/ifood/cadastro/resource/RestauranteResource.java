@@ -2,7 +2,6 @@ package org.project.ifood.cadastro.resource;
 
 import org.eclipse.microprofile.jwt.Claim;
 import org.eclipse.microprofile.jwt.Claims;
-import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -21,7 +20,7 @@ import org.project.ifood.cadastro.dto.restaurante.AtualizarRestaurante;
 import org.project.ifood.cadastro.dto.restaurante.RestauranteDTO;
 import org.project.ifood.cadastro.mapper.RestauranteMapper;
 import org.project.ifood.cadastro.model.Restaurante;
-import org.project.ifood.cadastro.providers.response.ConstraintViolationResponse;
+import org.project.ifood.cadastro.providers.exception.violation.ConstraintViolationResponse;
 import org.project.ifood.cadastro.service.RestauranteService;
 
 import javax.annotation.security.RolesAllowed;

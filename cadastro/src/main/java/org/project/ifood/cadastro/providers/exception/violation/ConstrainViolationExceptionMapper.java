@@ -1,6 +1,6 @@
-package org.project.ifood.cadastro.providers.exception;
+package org.project.ifood.cadastro.providers.exception.violation;
 
-import org.project.ifood.cadastro.providers.response.ConstraintViolationResponse;
+import org.project.ifood.cadastro.providers.exception.violation.ConstraintViolationResponse;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;

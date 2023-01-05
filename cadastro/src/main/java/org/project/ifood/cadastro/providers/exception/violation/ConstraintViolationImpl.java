@@ -1,4 +1,4 @@
-package org.project.ifood.cadastro.providers.response;
+package org.project.ifood.cadastro.providers.exception.violation;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 

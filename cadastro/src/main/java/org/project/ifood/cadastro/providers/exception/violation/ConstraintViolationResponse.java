@@ -1,4 +1,4 @@
-package org.project.ifood.cadastro.providers.response;
+package org.project.ifood.cadastro.providers.exception.violation;
 
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
