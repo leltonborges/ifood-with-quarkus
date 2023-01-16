@@ -1,0 +1,12 @@
+TB_PRATO:
+ - ID: 123
+   DESCRICAO: "Bom demais no café da manhã"
+   NOME: "Cuscuz com ovo"
+   PRECO: 3.99
+   RESTAURANTE:
+     - ID: 999
+       NOME: "Acular"
+       LOCALIZAO:
+         - ID: 1000
+           LATITUDE: -123543
+           LONGITUDE: 1254125

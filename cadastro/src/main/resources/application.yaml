@@ -1,4 +1,3 @@
-
 quarkus:
   application:
     name: cadastro
@@ -8,14 +7,40 @@ quarkus:
     devservices:
       enabled: false
     db-kind: postgresql
-    username: study
-    password: study
+    username: ${CADASTRO_IFOOD_DB_USER:study}
+    password: ${CADASTRO_IFOOD_DB_PASS:study}
     jdbc:
-      url: jdbc:postgresql://localhost:5433/ifood-cadastro
+      url: jdbc:tracing:postgresql://${CADASTRO_IFOOD_DB_HOST:localhost}:${CADASTRO_IFOOD_DB_PORT:5433}/${CADASTRO_IFOOD_DB_NAME:ifood-cadastro}
+      tracing: true
+      driver: io.opentracing.contrib.jdbc.TracingDriver
 
   hibernate-orm:
     database:
       generation: update
-#      generation: drop-and-create
   http:
     port: ${SERVER_PORT:8090}
+  jaeger:
+    service-name: ifood-cadastro
+    endpoint: http://localhost:14268/api/traces
+    sampler-param: 1
+    sampler-type: const
+  flyway:
+    clean-at-start: true
+    migrate-at-start: true
+
+amqp-host: localhost
+amqp-port: 5672
+amqp-username: admin
+amqp-password: admin
+
+mp:
+  messaging:
+    outgoing:
+      restaurantes:
+        connector: smallrye-amqp
+        address: restaurantes
+#mp:
+  jwt:
+    verify:
+      issuer: http://localhost:8190/auth/realms/ifood
+      publickey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk00ooaRwWGp0XtHgH1x+7VhrxrFb1pMV/ka66YiQ2+vtNAR5RPRvLslKwebw8tpTKzNFDMIEtn7JOH6nEvcjwx5AAZ97DcEvIgy/kttrzWiyWXjaTMvtc0msbtmMfBw2XrazAjHbWl3AdYGSMHDHCdOsV5dN1u+W1bJwzF68mv+ykJH+dB3++dTqu8jzYhDJHbj7doLwe52353GJC3ekZKhUruHdmK9+8jrO4xbIykpSaYiIELdYthrBHF6BLQF6kUd5jQO1Rgz/14fzt/2l1aRlxHXac24Psa+zNjLLSu8eYJaXbXF8VpTpahBQ3cjKiWIEmtQV4SDQfOPfidT7+QIDAQAB"

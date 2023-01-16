@@ -1,0 +1,7 @@
+TB_RESTAURANTE:
+  - ID: 123
+    NOME: "Novo restauraten"
+    PROPRIETARIO: "ID do keyclock 123"
+  - ID: 234
+    NOME: "Novo restauratene"
+    PROPRIETARIO: "ID do keyclock 234"
